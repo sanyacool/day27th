@@ -11,6 +11,8 @@
 				cursor: none;
 			}
 			body {
+				height: 100%;
+				weight: 100%;
 				margin: 0px;		
 			}
 			div {
@@ -31,7 +33,7 @@
 			}
     </style>
 </head> 
-  <body onmousemove="move(event)">
+  <body ontouchmove="move(event)", onmousemove="move(event)">
     <div id="canvas"></div><br>
     <script >
 			var socket = io();
@@ -118,72 +120,17 @@
 				let cir = document.getElementById(playerID);
 				cir.remove();
 			});		
-		
-			/*
-			stage.on('stagemousemove', function(evt) {
-				mouseX = evt.stageX;
-				mouseY = evt.stageY;
-				sprite.x = mouseX;
-				sprite.y = mouseY;								
-				socket.emit('mouse moved', mouseX, mouseY);
-				
-				stage.update();				
-				//add later or note
-				//socket.emit('player moved', evt.stageX, evt.stageY);				
-			});
-
-			socket.on('mouse moved', function(playerID, x, y) {
-				window[playerID].pointer.x = x;
-				window[playerID].pointer.y = y;
-				
-				stage.update();
-			});*/
 			
 			socket.on('imoved', function(x, y){
 				var d = new Date();
-				//console.log(d.getHours(),':',d.getMinutes(),':',d.getSeconds(), ':', d.getMilliseconds(), ' update to ', x, '-', y);
+
 				
 				var cir = document.getElementById('my');
 				cir.style.left = x + p;
 				cir.style.top = y + p;	
 				CreateTail(x, y, color, radius);
 			});							
-			
-			/*function onTickHandler(evt) {
-				if (!circle)
-					return;
-				if (interval(mouseX, circle.x) && interval(mouseY, circle.y)) {
-					return;					
-				}
-				let x;
-				let y;
-				
-				let diffX = mouseX - circle.x;
-				let diffY = mouseY - circle.y;
-				if (diffX < 0) diffX = -diffX;
-				if (diffY < 0) diffY = -diffY;
-				
-				if (diffX > diffY) {
-					if (circle.x > mouseX)
-						x = circle.x - 4;
-					else x = circle.x + 4;
-					y = Math.trunc((x - circle.x) / (mouseX - circle.x) * (mouseY - circle.y) + circle.y);	
-				} else {
-					if (circle.y > mouseY)
-						y = circle.y - 4;
-					else y = circle.y + 4;
-					x = Math.trunc((y - circle.y) / (mouseY - circle.y) * (mouseX - circle.x) + circle.x);	
-				}
-
-				//delete later or not
-					circle.x = x;
-					circle.y = y;  
-					stage.update();
-				//i'm mo sure it's right
-				
-				socket.emit('player moved', x, y);	
-			};
-			*/		
+	
 			function showPlayer(ID, x, y, color, radius, xCur, yCur) {
 				console.log("show me: " + ID);
 				
@@ -195,28 +142,6 @@
 				
 				cir.style.left = x + p;
 				cir.style.top  = y + p;	
-				
-				/*window[ID] = {
-					circle:  0,
-					pointer: 0
-				}
-				
-				let circle = new createjs.Shape();
-				circle.graphics.beginFill(color).drawCircle(0, 0, radius);				
-				window[ID].circle = circle;				
-				stage.addChild(window[ID].circle);
-				window[ID].circle.x = x;
-				window[ID].circle.y = y;
-				
-				let sprite = new createjs.Sprite(spriteSheet);
-				window[ID].pointer = sprite;
-				stage.addChild(window[ID].pointer);
-				window[ID].pointer.x = xCur;
-				window[ID].pointer.x = xCur;
-				window[ID].pointer.scaleX = 0.4;
-				window[ID].pointer.scaleY = 0.4;
-				
-				stage.update();*/
 			}
 
 			function CreateTail(X,Y, color, radius){
