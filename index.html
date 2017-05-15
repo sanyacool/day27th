@@ -37,25 +37,13 @@
 			}
     </style>
 </head> 
-  <body ontouchmove="move(event)">
+  <body ontouchmove="tchmove(event)";>
     <div id="canvas"></div><br>
     <script >
 			var socket = io();
 
 			document.body.style.width = window.innerWidth - 50 + 'px'; 
 			document.body.style.height = window.innerHeight - 50 + 'px'; 	
-			//canvas = document.querySelector('canvas');
-			//canvas.width = window.innerWidth-50;
-			//canvas.height = window.innerHeight-50;
-			//stage = new createjs.Stage("canvas");
-			
-			/*var data = {
-				images: ["/pointer"],
-				frames: [
-					[113, 4, 100, 100]
-				],
-			};			
-			var spriteSheet = new createjs.SpriteSheet(data);*/
 			
 			var circle;
 			var radius = getRandomInt(20, 50);
@@ -171,11 +159,15 @@
 				socket.emit('player moved', evt.x - (radius/2), evt.y - (radius/2));
 			}	
 			
-			function move(evt) {
+			function tchmove(evt) {
 				event.preventDefault();
-				var left=evt.touches[0].pageX;
-				var top=evt.touches[0].pageY; 
-				socket.emit('player moved', evt.x - (radius/2), evt.y - (radius/2));
+				var left = evt.touches[0].pageX;
+				var top = evt.touches[0].pageY; 
+				
+				var el = document.getElementById('my');
+				el.style.top = top - (radius/2) + 'px';
+				el.style.left = left - (radius/2) + 'px';
+				socket.emit('player moved', left - (radius/2), top - (radius/2));
 			};
 			
 			//circle is on pointer
