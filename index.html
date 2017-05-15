@@ -37,9 +37,9 @@
 			}
     </style>
 </head> 
-  <body ontouchmove="tchmove(event)";>
+  <body ontouchmove="tchmove(event)", onmousemove="move(event)">
     <div id="canvas"></div><br>
-    <script >
+    <script>
 			var socket = io();
 
 			document.body.style.width = window.innerWidth - 50 + 'px'; 
@@ -57,8 +57,6 @@
 			var mouseX = 0;
 			var mouseY = 0;
 			var p = "px";
-			
-			
 			
 			socket.on('connecting', function(playerID) {
 				//sprite = new createjs.Sprite(spriteSheet);	
@@ -101,7 +99,7 @@
 				showPlayer(ID, x, y, color, radius, xCur, yCur);
 			});
 			
-			document.documentElement.addEventListener('ontouchmove', move);
+			//document.documentElement.addEventListener('ontouchmove', move);
 			
 			socket.on('player moved', function(playerID, x, y) {
 				console.log("rad = " + window[playerID]);
@@ -153,11 +151,11 @@
 				circle.addEventListener("animationend", function() {
 					circle.remove();
 				});
-			}
+			};
 		
 			function move(evt) {
 				socket.emit('player moved', evt.x - (radius/2), evt.y - (radius/2));
-			}	
+			};
 			
 			function tchmove(evt) {
 				event.preventDefault();
@@ -169,6 +167,13 @@
 				el.style.left = left - (radius/2) + 'px';
 				socket.emit('player moved', left - (radius/2), top - (radius/2));
 			};
+			
+			/*function move(evt) {
+				var el = document.getElementById('my');
+				el.style.top = evt.x - (radius/2) + 'px';
+				el.style.left = evt.y - (radius/2) + 'px';
+				socket.emit('player moved', evt.x - (radius/2), evt.y - (radius/2));
+			};*/
 			
 			//circle is on pointer
 			function interval(a, b) 
