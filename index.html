@@ -37,7 +37,7 @@
 			}
     </style>
 </head> 
-  <body ontouchmove="touchmove(event)">
+  <body ontouchmove="move(event)">
     <div id="canvas"></div><br>
     <script >
 			var socket = io();
@@ -171,7 +171,7 @@
 				socket.emit('player moved', evt.x - (radius/2), evt.y - (radius/2));
 			}	
 			
-			function touchmove(evt) {
+			function move(evt) {
 				event.preventDefault();
 				var left=evt.touches[0].pageX;
 				var top=evt.touches[0].pageY; 
