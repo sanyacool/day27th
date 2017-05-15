@@ -6,13 +6,17 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"> </script>
     <title>Canvas Animation</title>
     <style>
-      #canvas {			
+			#canvas {			
 				border: solid 1px black;
 				cursor: none;
 			}
-			body {
+			html {
 				height: 100%;
 				weight: 100%;
+			}
+			body {
+				height: 600px;
+				weight: 200px;
 				margin: 0px;		
 			}
 			div {
@@ -33,7 +37,7 @@
 			}
     </style>
 </head> 
-  <body ontouchmove="move(event)", onmousemove="move(event)">
+  <body onmousemove="move(event)">
     <div id="canvas"></div><br>
     <script >
 			var socket = io();
@@ -65,6 +69,8 @@
 			var mouseX = 0;
 			var mouseY = 0;
 			var p = "px";
+			
+			
 			
 			socket.on('connecting', function(playerID) {
 				//sprite = new createjs.Sprite(spriteSheet);	
@@ -106,6 +112,8 @@
 			socket.on('imready', function(ID, x, y, color, radius, xCur, yCur) {
 				showPlayer(ID, x, y, color, radius, xCur, yCur);
 			});
+			
+			document.documentElement.addEventListener('ontouchmove', move);
 			
 			socket.on('player moved', function(playerID, x, y) {
 				console.log("rad = " + window[playerID]);
@@ -180,7 +188,8 @@
 			{		
 				return Math.random() * (max - min) + min;		
 			}
-
+			
+			
 			
 			
     </script>
