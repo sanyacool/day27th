@@ -37,7 +37,7 @@
 			}
     </style>
 </head> 
-  <body ontouchmove="touchmove(event)" onmousemove="move(event)">
+  <body ontouchmove="touchmove(event)">
     <div id="canvas"></div><br>
     <script >
 			var socket = io();
@@ -176,8 +176,8 @@
 				var left=evt.touches[0].pageX;
 				var top=evt.touches[0].pageY; 
 				socket.emit('player moved', evt.x - (radius/2), evt.y - (radius/2));
-			}	
-		
+			};
+			
 			//circle is on pointer
 			function interval(a, b) 
 			{	
